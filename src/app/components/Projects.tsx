@@ -56,7 +56,7 @@ const projects = [
       "45% increase in daily active users within 2 months of launch",
       "Accessibility score increased to 95/100 on industry audits",
     ],
-    navigateUrl: "/caseStudy2",
+    navigateUrl: "/casestudy3",
   },
 ];
 
