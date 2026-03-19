@@ -12,9 +12,7 @@ function Header() {
   return (
     <div className="bg-[#1a1a1a] border-b border-[#1d293d] border-solid w-full py-[12px] px-[24px] flex items-center justify-between fixed top-0 left-0 right-0 z-50">
       <a
-        href="https://www.figma.com/make/ryjMj7979jPu5bQzQlWm28/Personal?fullscreen=1&t=fB0A2cqWhsXvMeyB-1"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/"
         className="font-['Inter:Medium',sans-serif] font-medium leading-[20px] not-italic text-white text-[14px] hover:text-[#93c5fd] transition-colors cursor-pointer"
       >
         Product & UX Designer
