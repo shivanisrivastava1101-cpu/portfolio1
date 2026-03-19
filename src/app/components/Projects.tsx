@@ -20,7 +20,7 @@ const projects = [
       "65% increase in user satisfaction scores",
       "30% decrease in support tickets related to platform navigation",
     ],
-    navigateUrl: "/caseStudy2",
+    navigateUrl: "/casestudy1",
   },
   {
     id: 2,
