@@ -12,12 +12,27 @@ type OverlayPhase = "hidden" | "visible" | "exiting";
 export function ScrollTravelOverlay() {
   const [phase, setPhase] = useState<OverlayPhase>("hidden");
   const [message, setMessage] = useState("Scrolling…");
+  const [reducedMotion, setReducedMotion] = useState(false);
   const timeoutRef = useRef<number | null>(null);
   const phaseRef = useRef<OverlayPhase>("hidden");
 
   useEffect(() => {
     phaseRef.current = phase;
   }, [phase]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncReducedMotion = () => {
+      setReducedMotion(mediaQuery.matches);
+    };
+
+    syncReducedMotion();
+    mediaQuery.addEventListener("change", syncReducedMotion);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncReducedMotion);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScrollTravel = (event: Event) => {
@@ -37,6 +52,11 @@ export function ScrollTravelOverlay() {
           return;
         }
 
+        if (reducedMotion) {
+          setPhase("hidden");
+          return;
+        }
+
         setPhase("exiting");
         timeoutRef.current = window.setTimeout(() => {
           setPhase("hidden");
@@ -46,6 +66,12 @@ export function ScrollTravelOverlay() {
       }
 
       setMessage(nextMessage);
+
+      if (reducedMotion) {
+        setPhase("visible");
+        return;
+      }
+
       setPhase("hidden");
       requestAnimationFrame(() => {
         setPhase("visible");
@@ -60,7 +86,7 @@ export function ScrollTravelOverlay() {
         window.clearTimeout(timeoutRef.current);
       }
     };
-  }, []);
+  }, [reducedMotion]);
 
   if (phase === "hidden") {
     return null;
@@ -70,6 +96,7 @@ export function ScrollTravelOverlay() {
     <div
       className="scroll-travel-overlay"
       data-state={phase}
+      data-reduced-motion={reducedMotion ? "true" : "false"}
       aria-hidden="true"
     >
       <div className="scroll-travel-overlay__backdrop" />

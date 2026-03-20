@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { useInView } from "./useInView";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { startPageTransition } from "../utils/pageTransition";
 
 const projects = [
   {
@@ -66,6 +67,7 @@ export function Projects() {
 
   const handleProjectClick = (projectUrl: string) => {
     if (projectUrl.startsWith("/")) {
+      startPageTransition("Opening project…");
       navigate(projectUrl);
     } else {
       console.warn(`External URL navigation is not implemented: ${projectUrl}`);

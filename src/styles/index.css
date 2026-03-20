@@ -27,6 +27,10 @@ body {
   opacity: 0;
 }
 
+.scroll-travel-overlay[data-reduced-motion="true"] {
+  transition: none;
+}
+
 .scroll-travel-overlay__backdrop {
   position: absolute;
   inset: 0;
@@ -87,6 +91,12 @@ body {
   transform: translateY(-50%) translateX(-30px) rotate(-8deg);
   animation: scroll-travel-plane 1.3s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   filter: drop-shadow(0 10px 18px rgba(37, 99, 235, 0.35));
+}
+
+.scroll-travel-overlay[data-reduced-motion="true"]
+  .scroll-travel-overlay__plane {
+  animation: none;
+  transform: translateY(-50%) translateX(220px) rotate(0deg);
 }
 
 .scroll-travel-overlay__message {

@@ -4,6 +4,7 @@ import {
   hideScrollTravelOverlay,
   showScrollTravelOverlay,
 } from "./scrollTravelOverlay";
+import { isPageTransitionActive } from "./pageTransition";
 
 const PENDING_SECTION_SCROLL_KEY = "pendingSectionScroll";
 const LONG_SCROLL_THRESHOLD = 900;
@@ -107,6 +108,11 @@ export function scrollToSectionById(
   const distance = Math.abs(targetTop - window.scrollY);
   activeTravelSequence += 1;
   const sequenceId = activeTravelSequence;
+
+  if (isPageTransitionActive()) {
+    void smoothScrollTo(targetTop, options.duration);
+    return true;
+  }
 
   if (distance >= LONG_SCROLL_THRESHOLD) {
     void runLongDistanceScroll(targetTop, sequenceId, options.duration);
