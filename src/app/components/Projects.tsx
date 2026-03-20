@@ -73,7 +73,11 @@ export function Projects() {
   };
 
   return (
-    <section id="projects" ref={ref} className="py-32 px-6 bg-white">
+    <section
+      id="projects"
+      ref={ref}
+      className="scroll-mt-24 py-32 px-6 bg-white"
+    >
       <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-20"

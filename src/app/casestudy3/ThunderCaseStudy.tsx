@@ -3,11 +3,24 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { useScrollToTop } from "../useScrollToTop";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  navigateToPathOrSection,
+  scrollToSectionById,
+} from "../utils/sectionNavigation";
+import { usePendingSectionScroll } from "../hooks/usePendingSectionScroll";
+import { Footer } from "../components/Footer";
 
 // Header Component
 function Header() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   return (
-    <div className="bg-gradient-to-r from-[#0a0f1f] via-[#1a1447] to-[#0a0f1f] w-full sticky top-0 z-[60]">
+    <div
+      data-thunder-header="true"
+      className="bg-gradient-to-r from-[#0a0f1f] via-[#1a1447] to-[#0a0f1f] w-full sticky top-0 z-[60]"
+    >
       <div className="max-w-[1450px] mx-auto px-6 py-3 flex items-center justify-between">
         <motion.div
           className="text-white text-lg bg-gradient-to-r from-[#8b5cf6] to-[#6BB8FF] bg-clip-text text-transparent"
@@ -15,25 +28,58 @@ function Header() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          Product & UX Designer
+          <button
+            type="button"
+            onClick={() =>
+              navigateToPathOrSection({
+                navigate,
+                pathname,
+                targetPath: "/",
+                scrollToTop: true,
+                duration: 700,
+              })
+            }
+          >
+            Product & UX Designer
+          </button>
         </motion.div>
         <div className="flex gap-8">
-          <motion.a
-            href="#"
+          <motion.button
+            type="button"
+            onClick={() =>
+              navigateToPathOrSection({
+                navigate,
+                pathname,
+                targetPath: "/",
+                sectionId: "projects",
+                offsetSelectors: ["[data-global-header='true']"],
+                extraOffset: 12,
+              })
+            }
             className="text-[#cbd5e1] hover:text-[#8b5cf6] transition-colors font-medium"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Work
-          </motion.a>
-          <motion.a
-            href="#"
+          </motion.button>
+          <motion.button
+            type="button"
+            onClick={() =>
+              navigateToPathOrSection({
+                navigate,
+                pathname,
+                targetPath: "/",
+                sectionId: "about",
+                offsetSelectors: ["[data-global-header='true']"],
+                extraOffset: 12,
+              })
+            }
             className="text-[#cbd5e1] hover:text-[#8b5cf6] transition-colors font-medium"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             About
-          </motion.a>
+          </motion.button>
         </div>
       </div>
     </div>
@@ -53,17 +99,13 @@ function Navigation({ activeSection }: { activeSection: string }) {
   ];
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80; // Account for sticky header
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
+    scrollToSectionById(id, {
+      offsetSelectors: [
+        "[data-thunder-header='true']",
+        "[data-thunder-nav='true']",
+      ],
+      extraOffset: 12,
+    });
   };
 
   // Auto-scroll active tab into view for mobile
@@ -84,7 +126,10 @@ function Navigation({ activeSection }: { activeSection: string }) {
   }, [activeSection]);
 
   return (
-    <div className="bg-gradient-to-r from-[#0a0f1f] via-[#1a1447] to-[#0a0f1f] border-b border-[#8b5cf6]/30 shadow-lg shadow-[#8b5cf6]/20 fixed top-[52px] left-0 right-0 z-50">
+    <div
+      data-thunder-nav="true"
+      className="bg-gradient-to-r from-[#0a0f1f] via-[#1a1447] to-[#0a0f1f] border-b border-[#8b5cf6]/30 shadow-lg shadow-[#8b5cf6]/20 fixed top-[52px] left-0 right-0 z-50"
+    >
       {/* Desktop Navigation - centered, all items visible */}
       <div className="hidden lg:block">
         <div className="max-w-[1450px] mx-auto px-6">
@@ -248,7 +293,7 @@ function OverviewSection() {
   return (
     <div
       id="overview"
-      className="bg-[#0F1C3F] max-w-[1056px] mx-auto px-6 py-16"
+      className="scroll-mt-[120px] bg-[#0F1C3F] max-w-[1056px] mx-auto px-6 py-16"
     >
       <div className="">
         <motion.div
@@ -310,7 +355,7 @@ function KeyFindingsSection() {
   return (
     <div
       id="problem-space"
-      className="bg-gradient-to-b from-[#0F1C3F] via-[#1a1447] to-[#1a2847] py-16 relative overflow-hidden"
+      className="scroll-mt-[120px] bg-gradient-to-b from-[#0F1C3F] via-[#1a1447] to-[#1a2847] py-16 relative overflow-hidden"
     >
       {/* Background decorative elements */}
       <div className="absolute top-20 right-0 w-72 h-72 bg-gradient-to-br from-[#ef4444]/10 to-transparent rounded-full blur-3xl"></div>
@@ -535,7 +580,7 @@ function ResearchSection() {
   return (
     <div
       id="research"
-      className="bg-[#0F1C3F] max-w-[1056px] mx-auto px-6 py-16"
+      className="scroll-mt-[120px] bg-[#0F1C3F] max-w-[1056px] mx-auto px-6 py-16"
     >
       <div className="flex flex-col gap-12">
         <motion.div
@@ -873,7 +918,7 @@ function ResearchSection() {
 // User Stories Section
 function UserStoriesSection() {
   return (
-    <div id="insights-to-experience" className="py-16">
+    <div id="insights-to-experience" className="scroll-mt-[120px] py-16">
       <div className="max-w-[1056px] mx-auto px-6">
         <div className="flex flex-col gap-8">
           <h2 className="text-white text-4xl font-bold">
@@ -1056,7 +1101,7 @@ function DesignSection() {
   return (
     <div
       id="what-we-built"
-      className="bg-[#0F1C3F] max-w-[1056px] mx-auto px-6 py-16"
+      className="scroll-mt-[120px] bg-[#0F1C3F] max-w-[1056px] mx-auto px-6 py-16"
     >
       <div className="flex flex-col gap-8">
         <h2 className="text-white text-4xl font-bold">What We Built...</h2>
@@ -1325,7 +1370,10 @@ function ImpactOutcomesSection() {
   ];
 
   return (
-    <div id="impact" className="py-16 relative overflow-hidden">
+    <div
+      id="impact"
+      className="scroll-mt-[120px] py-16 relative overflow-hidden"
+    >
       {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#7ED957]/10 to-transparent rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#8b5cf6]/10 to-transparent rounded-full blur-3xl"></div>
@@ -1408,7 +1456,10 @@ function ImpactOutcomesSection() {
 // Retrospective Section
 function RetrospectiveSection() {
   return (
-    <div id="reflection" className="py-20 relative overflow-hidden">
+    <div
+      id="reflection"
+      className="scroll-mt-[120px] py-20 relative overflow-hidden"
+    >
       {/* Background effects */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-[#8b5cf6]/10 via-[#6BB8FF]/10 to-transparent rounded-full blur-3xl"></div>
 
@@ -1527,66 +1578,11 @@ function RetrospectiveSection() {
   );
 }
 
-// Footer Component
-function Footer() {
-  return (
-    <div className="bg-[#0a0f1f] border-t border-[#6BB8FF]/20 py-12 shadow-2xl shadow-[#6BB8FF]/10">
-      <div className="max-w-[1450px] mx-auto px-6">
-        <div className="flex flex-col items-center gap-4">
-          <div className="flex items-center gap-2 text-[#cbd5e1]">
-            <p>© Designed with</p>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
-              <path
-                d={svgPaths.p13f2e300}
-                fill="#FB2C36"
-                stroke="#FB2C36"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.33333"
-              />
-            </svg>
-            <p>by Shivani Srivastava</p>
-          </div>
-
-          <a
-            href="#"
-            className="flex items-center gap-2 text-[#cbd5e1] hover:text-[#6BB8FF] transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 20 20">
-              <path
-                d={svgPaths.peba4c00}
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.67"
-              />
-              <path
-                d="M5 7.5H1.66667V17.5H5V7.5Z"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.67"
-              />
-              <path
-                d={svgPaths.p25677470}
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.67"
-              />
-            </svg>
-            <span>LinkedIn</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // Main Component
 export default function ThunderCaseStudy() {
   const [activeSection, setActiveSection] = useState("overview");
   useScrollToTop();
+  usePendingSectionScroll();
 
   useEffect(() => {
     const handleScroll = () => {

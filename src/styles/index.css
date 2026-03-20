@@ -1,10 +1,119 @@
-@import './fonts.css';
-@import './tailwind.css';
-@import './theme.css';
+@import "./fonts.css";
+@import "./tailwind.css";
+@import "./theme.css";
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+body {
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-travel-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.scroll-travel-overlay[data-state="visible"] {
+  opacity: 1;
+}
+
+.scroll-travel-overlay[data-state="exiting"] {
+  opacity: 0;
+}
+
+.scroll-travel-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top, rgba(96, 165, 250, 0.32), transparent 40%),
+    linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.78) 0%,
+      rgba(15, 23, 42, 0.68) 100%
+    );
+  backdrop-filter: blur(14px);
+}
+
+.scroll-travel-overlay__card {
+  position: relative;
+  width: min(560px, 92vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 28px 28px 24px;
+  border-radius: 28px;
+  background: linear-gradient(
+    180deg,
+    rgba(239, 246, 255, 0.96) 0%,
+    rgba(219, 234, 254, 0.9) 100%
+  );
+  border: 1px solid rgba(147, 197, 253, 0.5);
+  box-shadow:
+    0 24px 80px rgba(15, 23, 42, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  transform: translateY(0) scale(1);
+}
+
+.scroll-travel-overlay__track {
+  position: relative;
+  width: min(420px, 100%);
+  height: 40px;
+  overflow: hidden;
+}
+
+.scroll-travel-overlay__track-line {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 3px dashed rgba(37, 99, 235, 0.3);
+}
+
+.scroll-travel-overlay__plane {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  color: #2563eb;
+  transform: translateY(-50%) translateX(-30px) rotate(-8deg);
+  animation: scroll-travel-plane 1.3s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  filter: drop-shadow(0 10px 18px rgba(37, 99, 235, 0.35));
+}
+
+.scroll-travel-overlay__message {
+  margin: 0;
+  color: #1e3a8a;
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+@keyframes scroll-travel-plane {
+  0% {
+    transform: translateY(-50%) translateX(-30px) rotate(-10deg);
+    opacity: 0.2;
+  }
+  12% {
+    opacity: 1;
+  }
+  55% {
+    transform: translateY(-50%) translateX(220px) rotate(1deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50%) translateX(470px) rotate(8deg);
+    opacity: 0.45;
+  }
 }
 
 /* Screen reader only utility */

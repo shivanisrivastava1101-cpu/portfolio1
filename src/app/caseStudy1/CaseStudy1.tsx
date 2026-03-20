@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { useEffect, useState } from "react";
 import { PortfolioHero } from "./PortfolioHero";
 import { ProjectOverview } from "./ProjectOverview";
 import { ProblemSpace } from "./ProblemSpace";
@@ -8,61 +7,101 @@ import { ProjectVisual } from "./ProjectVisual";
 import { ImpactOutcomes } from "./ImpactOutcomes";
 import { NDANote } from "./NDANote";
 import { SidebarNav } from "./SidebarNav";
-import { Footer } from "./Footer";
 import { useScrollToTop } from "../useScrollToTop";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 
 export default function CaseStudy1() {
   useScrollToTop();
+  const [topOffset, setTopOffset] = useState(160);
+
+  useEffect(() => {
+    const updateOffsets = () => {
+      const topChrome = document.querySelector(
+        "[data-top-chrome='case-study-1']",
+      );
+      const topChromeHeight = topChrome?.getBoundingClientRect().height ?? 0;
+      const combinedOffset = topChromeHeight + 12;
+
+      if (combinedOffset > 0) {
+        setTopOffset(combinedOffset);
+      }
+    };
+
+    const previousScrollPaddingTop =
+      document.documentElement.style.scrollPaddingTop;
+    updateOffsets();
+    const frame = window.requestAnimationFrame(updateOffsets);
+
+    window.addEventListener("resize", updateOffsets);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", updateOffsets);
+      document.documentElement.style.scrollPaddingTop =
+        previousScrollPaddingTop;
+    };
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.style.scrollPaddingTop = `${topOffset}px`;
+  }, [topOffset]);
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
-      {/* Back navigation */}
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-sm font-medium text-slate-700 transition-colors hover:text-slate-900"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to portfolio
-          </Link>
-          <span className="text-sm font-medium text-slate-500">
-            Case Study 1
-          </span>
-        </div>
-      </header>
+      <div
+        data-top-chrome="case-study-1"
+        className="fixed top-0 left-0 right-0 z-[70]"
+      >
+        <Header fixed={false} />
+        <SidebarNav />
+      </div>
 
       {/* Main layout: sidebar + content */}
-      <div className="mx-auto max-w-7xl px-6 py-10 lg:flex lg:gap-12">
-        {/* Sticky sidebar */}
-        <aside className="hidden lg:block lg:w-56 shrink-0">
-          <div className="sticky top-24">
-            <SidebarNav />
-          </div>
-        </aside>
-
+      <div
+        className="mx-auto max-w-7xl px-6 pb-10"
+        style={{ paddingTop: `${topOffset}px` }}
+      >
         {/* Page content */}
-        <main className="flex-1 min-w-0">
+        <main
+          className="flex-1 min-w-0"
+          style={{ ["--case-study-top-offset" as string]: `${topOffset}px` }}
+        >
           <PortfolioHero />
 
-          <section id="overview">
+          <section
+            id="overview"
+            className="scroll-mt-[var(--case-study-top-offset)]"
+          >
             <ProjectOverview />
           </section>
 
-          <section id="problem-space">
+          <section
+            id="problem-space"
+            className="scroll-mt-[var(--case-study-top-offset)]"
+          >
             <ProblemSpace />
           </section>
 
-          <section id="work-description">
+          <section
+            id="work-description"
+            className="scroll-mt-[var(--case-study-top-offset)]"
+          >
             <WorkDescription />
             <ProjectVisual />
           </section>
 
-          <section id="impact">
+          <section
+            id="impact"
+            className="scroll-mt-[var(--case-study-top-offset)]"
+          >
             <ImpactOutcomes />
           </section>
 
-          <section id="nda">
+          <section
+            id="nda"
+            className="scroll-mt-[var(--case-study-top-offset)]"
+          >
             <NDANote />
           </section>
         </main>

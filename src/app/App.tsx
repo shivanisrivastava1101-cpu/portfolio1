@@ -9,11 +9,14 @@ import { Footer } from "./components/Footer";
 import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useScrollToTop } from "./useScrollToTop";
+import { smoothScrollToTop } from "./utils/sectionNavigation";
+import { usePendingSectionScroll } from "./hooks/usePendingSectionScroll";
 
 function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useScrollToTop();
+  usePendingSectionScroll();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,7 +28,7 @@ function App() {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    smoothScrollToTop();
   };
 
   return (

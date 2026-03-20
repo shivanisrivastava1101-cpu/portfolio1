@@ -1,4 +1,5 @@
 import { useLayoutEffect } from "react";
+import { smoothScrollTo } from "./utils/smoothScroll";
 
 export function useScrollToTop() {
   useLayoutEffect(() => {
@@ -7,16 +8,11 @@ export function useScrollToTop() {
     }
 
     const frame = window.requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+      smoothScrollTo(0, 800);
     });
-
-    const timeout = window.setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    }, 0);
 
     return () => {
       window.cancelAnimationFrame(frame);
-      window.clearTimeout(timeout);
     };
   }, []);
 }

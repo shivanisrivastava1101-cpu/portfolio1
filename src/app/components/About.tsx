@@ -52,8 +52,9 @@ export function About() {
 
   return (
     <section
+      id="about"
       ref={ref}
-      className="relative py-32 px-6 bg-gradient-to-b from-purple-50/50 via-cyan-50/30 to-white overflow-hidden"
+      className="relative scroll-mt-24 py-32 px-6 bg-gradient-to-b from-purple-50/50 via-cyan-50/30 to-white overflow-hidden"
     >
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
