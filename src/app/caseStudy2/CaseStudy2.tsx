@@ -6,6 +6,7 @@ import { Users } from "lucide-react";
 import svgPaths from "./imports/svg-qyn6hla94m";
 import navSvgPaths from "./imports/svg-erpmt3msaq";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { useScrollToTop } from "../useScrollToTop";
 
 // Header Component
 function Header() {
@@ -2232,6 +2233,7 @@ function ContentContainer() {
 export default function CaseStudy2() {
   const [activeSection, setActiveSection] = useState("overview");
   const isScrollingRef = useRef(false);
+  useScrollToTop();
 
   useEffect(() => {
     const handleScroll = () => {

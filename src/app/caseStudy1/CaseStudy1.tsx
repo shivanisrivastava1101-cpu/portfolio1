@@ -9,8 +9,11 @@ import { ImpactOutcomes } from "./ImpactOutcomes";
 import { NDANote } from "./NDANote";
 import { SidebarNav } from "./SidebarNav";
 import { Footer } from "./Footer";
+import { useScrollToTop } from "../useScrollToTop";
 
 export default function CaseStudy1() {
+  useScrollToTop();
+
   return (
     <div className="min-h-screen bg-white text-slate-900">
       {/* Back navigation */}
@@ -23,7 +26,9 @@ export default function CaseStudy1() {
             <ArrowLeft className="h-4 w-4" />
             Back to portfolio
           </Link>
-          <span className="text-sm font-medium text-slate-500">Case Study 1</span>
+          <span className="text-sm font-medium text-slate-500">
+            Case Study 1
+          </span>
         </div>
       </header>
 
