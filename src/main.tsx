@@ -36,7 +36,7 @@ function ScrollToTop() {
 }
 
 createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/portfolio1">
     <ScrollToTop />
     <Routes>
       <Route path="/" element={<App />} />
