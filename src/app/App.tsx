@@ -3,15 +3,17 @@ import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
 import { Projects } from "./components/Projects";
-import { DesignProcess } from "./components/DesignProcess";
 import { Testimonials } from "./components/Testimonials";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { useScrollToTop } from "./useScrollToTop";
 
 function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useScrollToTop();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +44,7 @@ function App() {
         <Hero />
         <About />
         <Projects />
-  
+
         <Testimonials />
       </main>
 

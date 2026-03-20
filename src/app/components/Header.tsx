@@ -15,7 +15,10 @@ export function Header() {
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: "smooth" });
+    if (element) {
+      const top = element.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
   };
 
   return (
@@ -37,7 +40,14 @@ export function Header() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-          ><span className="text-sm tracking-wide text-slate-300" style={{ fontWeight: 500 }}>Product & UX Designer</span></motion.div>
+          >
+            <span
+              className="text-sm tracking-wide text-slate-300"
+              style={{ fontWeight: 500 }}
+            >
+              Product & UX Designer
+            </span>
+          </motion.div>
 
           {/* Right side - Navigation */}
           <motion.nav
@@ -61,13 +71,6 @@ export function Header() {
             >
               About
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-400 to-sky-400 group-hover:w-full transition-all duration-300" />
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="px-6 py-2 bg-white text-slate-900 rounded-lg hover:bg-slate-100 transition-all"
-              style={{ fontWeight: 600 }}
-            >
-              Contact
             </button>
           </motion.nav>
         </div>
