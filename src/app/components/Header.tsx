@@ -1,8 +1,16 @@
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { navigateToPathOrSection } from "../utils/sectionNavigation";
 
-export function Header() {
+type HeaderProps = {
+  fixed?: boolean;
+};
+
+export function Header({ fixed = true }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,16 +22,36 @@ export function Header() {
   }, []);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const top = element.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
+    navigateToPathOrSection({
+      navigate,
+      pathname,
+      targetPath: "/",
+      sectionId: id,
+      offsetSelectors: ["[data-global-header='true']"],
+      extraOffset: 12,
+    });
+  };
+
+  const navigateToHome = () => {
+    navigateToPathOrSection({
+      navigate,
+      pathname,
+      targetPath: "/",
+      scrollToTop: true,
+      duration: 700,
+    });
+  };
+
+  const navigateToHomeSection = (id: string) => {
+    scrollToSection(id);
   };
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      data-global-header="true"
+      className={`${
+        fixed ? "fixed top-0 left-0 right-0 z-50" : "relative z-10"
+      } transition-all duration-300 ${
         isScrolled
           ? "bg-slate-900/95 backdrop-blur-md shadow-lg border-b border-white/10"
           : "bg-transparent"
@@ -41,12 +69,18 @@ export function Header() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <span
-              className="text-sm tracking-wide text-slate-300"
+            <button
+              type="button"
+              onClick={navigateToHome}
+              className={`text-sm tracking-wide transition-colors ${
+                isScrolled
+                  ? "text-slate-300 hover:text-white"
+                  : "text-slate-900 hover:text-slate-800"
+              }`}
               style={{ fontWeight: 500 }}
             >
               Product & UX Designer
-            </span>
+            </button>
           </motion.div>
 
           {/* Right side - Navigation */}
@@ -57,16 +91,24 @@ export function Header() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <button
-              onClick={() => scrollToSection("projects")}
-              className="text-slate-300 hover:text-white transition-colors relative group"
+              onClick={() => navigateToHomeSection("projects")}
+              className={`transition-colors relative group ${
+                isScrolled
+                  ? "text-slate-300 hover:text-white"
+                  : "text-slate-900 hover:text-slate-800"
+              }`}
               style={{ fontWeight: 500 }}
             >
               Work
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-400 to-sky-400 group-hover:w-full transition-all duration-300" />
             </button>
             <button
-              onClick={() => scrollToSection("about")}
-              className="text-slate-300 hover:text-white transition-colors relative group"
+              onClick={() => navigateToHomeSection("about")}
+              className={`transition-colors relative group ${
+                isScrolled
+                  ? "text-slate-300 hover:text-white"
+                  : "text-slate-900 hover:text-slate-800"
+              }`}
               style={{ fontWeight: 500 }}
             >
               About

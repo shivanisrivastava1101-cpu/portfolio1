@@ -1,16 +1,16 @@
 import { motion } from "motion/react";
-import { Heart, Linkedin, Mail } from "lucide-react";
+import { Linkedin, Mail } from "lucide-react";
 import { useInView } from "./useInView";
-
-const socialLinks = [
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
-];
 
 export function Footer() {
   const [ref, isInView] = useInView({ threshold: 0.5 });
 
   return (
-    <footer id="contact" ref={ref} className="relative py-32 px-6 bg-gradient-to-b from-slate-900 to-slate-950 text-white overflow-hidden">
+    <footer
+      id="contact"
+      ref={ref}
+      className="relative py-32 px-6 bg-gradient-to-b from-slate-900 to-slate-950 text-white overflow-hidden"
+    >
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl" />
@@ -58,9 +58,11 @@ export function Footer() {
             whileTap={{ scale: 0.98 }}
           >
             <Mail className="w-6 h-6" />
-            <span style={{ fontWeight: 600 }}>shivani.srivastava1101@gmail.com</span>
+            <span style={{ fontWeight: 600 }}>
+              shivani.srivastava1101@gmail.com
+            </span>
           </motion.a>
-          
+
           <motion.a
             href="https://www.linkedin.com/in/shivani-sri/"
             className="group flex items-center gap-3 px-8 py-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-indigo-400/50 hover:bg-white/10 transition-all"
@@ -73,7 +75,12 @@ export function Footer() {
             rel="noopener noreferrer"
           >
             <Linkedin className="w-5 h-5 text-sky-400" />
-            <span className="text-slate-300 group-hover:text-white transition-colors" style={{ fontWeight: 500 }}>Connect on LinkedIn</span>
+            <span
+              className="text-slate-300 group-hover:text-white transition-colors"
+              style={{ fontWeight: 500 }}
+            >
+              Connect on LinkedIn
+            </span>
           </motion.a>
         </motion.div>
 
@@ -89,7 +96,6 @@ export function Footer() {
               <span>© 2026 Shivani Srivastava · Senior Product Designer</span>
             </div>
             <div className="flex items-center gap-2">
-              
               <span className="text-slate-600">·</span>
               <span>Available for global projects</span>
             </div>
