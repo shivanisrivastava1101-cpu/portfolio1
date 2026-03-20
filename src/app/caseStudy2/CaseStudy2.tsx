@@ -3,28 +3,76 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Users } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 import svgPaths from "./imports/svg-qyn6hla94m";
 import navSvgPaths from "./imports/svg-erpmt3msaq";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useScrollToTop } from "../useScrollToTop";
+import {
+  navigateToPathOrSection,
+  scrollToSectionById,
+} from "../utils/sectionNavigation";
+import { usePendingSectionScroll } from "../hooks/usePendingSectionScroll";
+import { Footer } from "../components/Footer";
 
 // Header Component
 function Header() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   return (
-    <div className="bg-[#1a1a1a] border-b border-[#1d293d] border-solid w-full py-[12px] px-[24px] flex items-center justify-between fixed top-0 left-0 right-0 z-50">
-      <a
-        href="/"
+    <div
+      data-case-study-2-header="true"
+      className="bg-[#1a1a1a] border-b border-[#1d293d] border-solid w-full py-[12px] px-[24px] flex items-center justify-between fixed top-0 left-0 right-0 z-50"
+    >
+      <button
+        type="button"
+        onClick={() =>
+          navigateToPathOrSection({
+            navigate,
+            pathname,
+            targetPath: "/",
+            scrollToTop: true,
+            duration: 700,
+          })
+        }
         className="font-['Inter:Medium',sans-serif] font-medium leading-[20px] not-italic text-white text-[14px] hover:text-[#93c5fd] transition-colors cursor-pointer"
       >
         Product & UX Designer
-      </a>
+      </button>
       <div className="flex gap-[32px]">
-        <p className="font-['Inter:Medium',sans-serif] font-medium leading-[24px] not-italic text-[#d1d5dc] text-[16px] text-center cursor-pointer hover:text-white transition-colors">
+        <button
+          type="button"
+          onClick={() =>
+            navigateToPathOrSection({
+              navigate,
+              pathname,
+              targetPath: "/",
+              sectionId: "projects",
+              offsetSelectors: ["[data-global-header='true']"],
+              extraOffset: 12,
+            })
+          }
+          className="font-['Inter:Medium',sans-serif] font-medium leading-[24px] not-italic text-[#d1d5dc] text-[16px] text-center cursor-pointer hover:text-white transition-colors"
+        >
           Work
-        </p>
-        <p className="font-['Inter:Medium',sans-serif] font-medium leading-[24px] not-italic text-[#d1d5dc] text-[16px] text-center cursor-pointer hover:text-white transition-colors">
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            navigateToPathOrSection({
+              navigate,
+              pathname,
+              targetPath: "/",
+              sectionId: "about",
+              offsetSelectors: ["[data-global-header='true']"],
+              extraOffset: 12,
+            })
+          }
+          className="font-['Inter:Medium',sans-serif] font-medium leading-[24px] not-italic text-[#d1d5dc] text-[16px] text-center cursor-pointer hover:text-white transition-colors"
+        >
           About
-        </p>
+        </button>
       </div>
     </div>
   );
@@ -458,6 +506,7 @@ function TopNavigation({
   return (
     <div
       ref={navRef}
+      data-case-study-2-nav="true"
       className="w-full sticky top-[49px] z-50 bg-white overflow-x-auto overflow-y-hidden [&::-webkit-scrollbar]:h-[6px] [&::-webkit-scrollbar-track]:bg-[#f1f5f9] [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#bedbff] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-[#93c5fd] [&::-webkit-scrollbar-thumb]:transition-colors scrollbar-thin"
     >
       <div className="bg-white w-full content-stretch flex items-center md:justify-center px-[24px] py-[16px] relative z-50 border-b border-[#e2e8f0] border-solid min-w-max md:min-w-0">
@@ -477,17 +526,12 @@ function TopNavigation({
                       // Set flag to prevent scroll tracking during programmatic scroll
                       isScrollingRef.current = true;
 
-                      // Get element position relative to viewport
-                      const elementRect = element.getBoundingClientRect();
-                      // Account for header (49px) + nav bar (~70px) = ~120px total
-                      const scrollOffset = 120;
-                      // Calculate target position: current scroll + element position - offset
-                      const targetPosition =
-                        window.scrollY + elementRect.top - scrollOffset;
-
-                      window.scrollTo({
-                        top: targetPosition,
-                        behavior: "smooth",
+                      scrollToSectionById(section.id, {
+                        offsetSelectors: [
+                          "[data-case-study-2-header='true']",
+                          "[data-case-study-2-nav='true']",
+                        ],
+                        extraOffset: 12,
                       });
 
                       // Update active section immediately
@@ -1243,59 +1287,6 @@ function ImpactMetricCard({
       <p className="font-['Inter:Regular',sans-serif] font-normal leading-[22.75px] not-italic text-[#45556c] text-[14px]">
         {description}
       </p>
-    </div>
-  );
-}
-
-// Footer
-function Footer() {
-  return (
-    <div className="bg-[#1a1a1a] border-t border-[#1d293d] border-solid w-full py-[49px] px-[173px]">
-      <div className="flex flex-col gap-[16px] items-center justify-center w-full">
-        <div className="flex flex-col gap-[4px] items-center">
-          <p className="font-['Inter:Regular',sans-serif] font-normal leading-[24px] not-italic text-[#cad5e2] text-[16px] text-center px-[116px] py-[0px]">
-            Designed with ❤️ by
-            <br /> Shivani Srivastava
-          </p>
-        </div>
-        <div className="flex gap-[8px] items-center">
-          <div className="size-[20px]">
-            <svg
-              className="block size-full"
-              fill="none"
-              preserveAspectRatio="none"
-              viewBox="0 0 20 20"
-            >
-              <g>
-                <path
-                  d={svgPaths.peba4c00}
-                  stroke="var(--stroke-0, #CAD5E2)"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.66667"
-                />
-                <path
-                  d="M5 7.5H1.66667V17.5H5V7.5Z"
-                  stroke="var(--stroke-0, #CAD5E2)"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.66667"
-                />
-                <path
-                  d={svgPaths.p25677470}
-                  stroke="var(--stroke-0, #CAD5E2)"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.66667"
-                />
-              </g>
-            </svg>
-          </div>
-          <p className="font-['Inter:Regular',sans-serif] font-normal leading-[24px] not-italic text-[#cad5e2] text-[16px] text-center">
-            LinkedIn
-          </p>
-        </div>
-      </div>
     </div>
   );
 }
@@ -2234,6 +2225,7 @@ export default function CaseStudy2() {
   const [activeSection, setActiveSection] = useState("overview");
   const isScrollingRef = useRef(false);
   useScrollToTop();
+  usePendingSectionScroll();
 
   useEffect(() => {
     const handleScroll = () => {

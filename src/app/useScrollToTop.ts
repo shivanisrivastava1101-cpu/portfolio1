@@ -1,4 +1,6 @@
 import { useLayoutEffect } from "react";
+import { smoothScrollTo } from "./utils/smoothScroll";
+import { isPageTransitionActive } from "./utils/pageTransition";
 
 export function useScrollToTop() {
   useLayoutEffect(() => {
@@ -6,17 +8,16 @@ export function useScrollToTop() {
       window.history.scrollRestoration = "manual";
     }
 
-    const frame = window.requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    });
+    if (isPageTransitionActive()) {
+      return;
+    }
 
-    const timeout = window.setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    }, 0);
+    const frame = window.requestAnimationFrame(() => {
+      smoothScrollTo(0, 800);
+    });
 
     return () => {
       window.cancelAnimationFrame(frame);
-      window.clearTimeout(timeout);
     };
   }, []);
 }

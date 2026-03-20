@@ -168,21 +168,21 @@ export function Hero() {
                   delay: 1,
                 }}
               >
-                <div className="w-full h-full bg-white p-6 flex flex-col justify-center items-center text-center">
-                  <GraduationCap className="w-14 h-14 text-indigo-600 mb-3" />
+                <div className="w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 p-6 flex flex-col justify-center items-center text-center">
+                  <GraduationCap className="w-14 h-14 text-white/90 mb-3" />
                   <div
-                    className="text-base text-slate-800 mb-1"
+                    className="text-base text-white mb-1"
                     style={{ fontWeight: 600 }}
                   >
                     NUS, Singapore (MAUD)
                   </div>
                   <div
-                    className="text-base text-slate-800"
+                    className="text-base text-white"
                     style={{ fontWeight: 600 }}
                   >
                     UCLA, Los Angeles (UX)
                   </div>
-                  <div className="text-sm text-slate-500 mt-2">
+                  <div className="text-sm text-white/70 mt-2">
                     Graduate Education
                   </div>
                 </div>

@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { useInView } from "./useInView";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { startPageTransition } from "../utils/pageTransition";
 
 const projects = [
   {
@@ -66,6 +67,7 @@ export function Projects() {
 
   const handleProjectClick = (projectUrl: string) => {
     if (projectUrl.startsWith("/")) {
+      startPageTransition("Opening project…");
       navigate(projectUrl);
     } else {
       console.warn(`External URL navigation is not implemented: ${projectUrl}`);
@@ -73,7 +75,11 @@ export function Projects() {
   };
 
   return (
-    <section id="projects" ref={ref} className="py-32 px-6 bg-white">
+    <section
+      id="projects"
+      ref={ref}
+      className="scroll-mt-24 py-32 px-6 bg-white"
+    >
       <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-20"

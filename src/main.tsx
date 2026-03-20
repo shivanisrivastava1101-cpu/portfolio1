@@ -1,43 +1,41 @@
 import { createRoot } from "react-dom/client";
-import { useEffect, useLayoutEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import App from "./app/App.tsx";
 import CaseStudy1 from "./app/caseStudy1/CaseStudy1";
 import CaseStudy2 from "./app/caseStudy2/CaseStudy2";
 import CaseStudy3 from "./app/casestudy3/ThunderCaseStudy";
+import { ScrollTravelOverlay } from "./app/components/ScrollTravelOverlay";
+import {
+  endPageTransitionWhenStable,
+  isPageTransitionActive,
+} from "./app/utils/pageTransition";
 import "./styles/index.css";
 
-function ScrollToTop() {
-  const { pathname } = useLocation();
+function RouteTransitionHandler() {
+  const location = useLocation();
 
   useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
+    if (!isPageTransitionActive()) {
+      return;
     }
-  }, []);
 
-  useLayoutEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+      void endPageTransitionWhenStable();
     });
 
-    return () => window.cancelAnimationFrame(frame);
-  }, [pathname]);
-
-  useEffect(() => {
-    const timeout = window.setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    }, 0);
-
-    return () => window.clearTimeout(timeout);
-  }, [pathname]);
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
+  }, [location.pathname]);
 
   return null;
 }
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter basename="/portfolio1">
-    <ScrollToTop />
+    <ScrollTravelOverlay />
+    <RouteTransitionHandler />
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/casestudy1" element={<CaseStudy1 />} />
