@@ -1372,7 +1372,7 @@ function SolutionSection() {
 
 // Main Container
 function ContentContainer() {
-  const sliderRef = useRef<Slider>(null);
+  const sliderRef = useRef<{ slickNext: () => void } | null>(null);
 
   return (
     <div className="w-full max-w-[1104px] mx-auto px-[24px] py-[128px] flex flex-col gap-[80px]">

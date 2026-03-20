@@ -9,7 +9,6 @@ import {
   scrollToSectionById,
 } from "../utils/sectionNavigation";
 import { usePendingSectionScroll } from "../hooks/usePendingSectionScroll";
-import { Footer } from "../components/Footer";
 
 // Header Component
 function Header() {
