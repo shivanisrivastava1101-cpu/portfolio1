@@ -540,16 +540,17 @@ function TopNavigation({
 // Header Section Components
 function RoleBadge() {
   return (
-    <div className="flex items-center gap-[12px] flex-wrap">
-      <div className="bg-gradient-to-r from-[#0468B1] to-[#0080D7] border border-[#0468B1] border-solid h-[38px] rounded-[33554400px] w-fit px-[16px] flex items-center shadow-lg shadow-blue-200">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-[12px] flex-wrap w-full">
+      <div className="bg-gradient-to-r from-[#0468B1] to-[#0080D7] border border-[#0468B1] border-solid h-[38px] rounded-[33554400px] w-full sm:w-fit px-[16px] flex items-center shadow-lg shadow-blue-200">
         <p className="font-['Inter:Medium',sans-serif] font-medium leading-[20px] not-italic text-white text-[14px]">
           UX Designer (Feature Lead)
         </p>
       </div>
-      <div className="bg-white border border-[#e2e8f0] border-solid h-[38px] rounded-[33554400px] w-fit px-[16px] flex items-center gap-[8px]">
+      <div className="bg-white border border-[#e2e8f0] border-solid min-h-[38px] rounded-[33554400px] w-full sm:w-fit px-[16px] py-[8px] sm:py-0 flex items-start sm:items-center gap-[8px]">
         <span className="text-[16px]">🌍</span>
-        <p className="font-['Inter:Medium',sans-serif] font-medium leading-[20px] not-italic text-[#0468B1] text-[14px]">
-          Tech for Good · UNDP Partner
+        <p className="font-['Inter:Medium',sans-serif] font-medium leading-[18px] sm:leading-[20px] not-italic text-[#0468B1] text-[13px] sm:text-[14px] whitespace-normal break-words">
+          Tech for Good · Supported by IKEA Foundation, USAID, USDA, and Skoll
+          Foundation
         </p>
       </div>
     </div>
@@ -1398,6 +1399,25 @@ function ContentContainer() {
         <QuickInfoSection />
 
         {/* Decorative Divider */}
+
+        <figure className="w-full overflow-hidden rounded-[20px] border border-[#e2e8f0] bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
+          <img
+            src="https://imageio.forbes.com/specials-images/imageserve/664cb8d6b706e50aa8ec9a23/Risaralda-story-map/960x0.png?format=png&width=1440"
+            alt="Risaralda story map created on the Terraso platform"
+            className="block w-full h-auto object-contain"
+            loading="eager"
+          />
+          <figcaption className="px-[20px] py-[16px] bg-[#f8fafc] border-t border-[#e2e8f0]">
+            <p className="font-['Inter:Regular',sans-serif] font-normal text-[13px] leading-[20px] text-[#475569]">
+              Landscape managers in Risaralda, Colombia created this story map
+              on the open-source Terraso platform for internal and external
+              communications and fundraising.
+            </p>
+            <p className="mt-[6px] font-['Inter:Medium',sans-serif] font-medium text-[12px] leading-[18px] uppercase tracking-[0.08em] text-[#64748b]">
+              Tech Matters
+            </p>
+          </figcaption>
+        </figure>
 
         <ContextSection />
       </div>

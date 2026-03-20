@@ -1530,53 +1530,50 @@ function RetrospectiveSection() {
 // Footer Component
 function Footer() {
   return (
-    <div className="bg-[#0a0f1f] border-t border-[#6BB8FF]/20 py-12 shadow-2xl shadow-[#6BB8FF]/10">
-      <div className="max-w-[1450px] mx-auto px-6">
-        <div className="flex flex-col items-center gap-4">
-          <div className="flex items-center gap-2 text-[#cbd5e1]">
-            <p>© Designed with</p>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
-              <path
-                d={svgPaths.p13f2e300}
-                fill="#FB2C36"
-                stroke="#FB2C36"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.33333"
-              />
+    <div className="bg-[#1a1a1a] border-t border-[#1d293d] border-solid w-full py-[49px] px-[173px]">
+      <div className="flex flex-col gap-[16px] items-center justify-center w-full">
+        <div className="flex flex-col gap-[4px] items-center">
+          <p className="font-['Inter:Regular',sans-serif] font-normal leading-[24px] not-italic text-[#cad5e2] text-[16px] text-center px-[116px] py-[0px]">
+            Designed with ❤️ by
+            <br /> Shivani Srivastava
+          </p>
+        </div>
+        <div className="flex gap-[8px] items-center">
+          <div className="size-[20px]">
+            <svg
+              className="block size-full"
+              fill="none"
+              preserveAspectRatio="none"
+              viewBox="0 0 20 20"
+            >
+              <g>
+                <path
+                  d={svgPaths.peba4c00}
+                  stroke="var(--stroke-0, #CAD5E2)"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.66667"
+                />
+                <path
+                  d="M5 7.5H1.66667V17.5H5V7.5Z"
+                  stroke="var(--stroke-0, #CAD5E2)"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.66667"
+                />
+                <path
+                  d={svgPaths.p25677470}
+                  stroke="var(--stroke-0, #CAD5E2)"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.66667"
+                />
+              </g>
             </svg>
-            <p>by Shivani Srivastava</p>
           </div>
-
-          <a
-            href="#"
-            className="flex items-center gap-2 text-[#cbd5e1] hover:text-[#6BB8FF] transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 20 20">
-              <path
-                d={svgPaths.peba4c00}
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.67"
-              />
-              <path
-                d="M5 7.5H1.66667V17.5H5V7.5Z"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.67"
-              />
-              <path
-                d={svgPaths.p25677470}
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.67"
-              />
-            </svg>
-            <span>LinkedIn</span>
-          </a>
+          <p className="font-['Inter:Regular',sans-serif] font-normal leading-[24px] not-italic text-[#cad5e2] text-[16px] text-center">
+            LinkedIn
+          </p>
         </div>
       </div>
     </div>
