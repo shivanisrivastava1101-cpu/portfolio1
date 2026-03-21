@@ -1,7 +1,11 @@
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { navigateToPathOrSection } from "../utils/sectionNavigation";
+import {
+  navigateToPathOrSection,
+  smoothScrollToTop,
+} from "../utils/sectionNavigation";
+import { startPageTransition } from "../utils/pageTransition";
 
 type HeaderProps = {
   fixed?: boolean;
@@ -44,6 +48,16 @@ export function Header({ fixed = true }: HeaderProps) {
 
   const navigateToHomeSection = (id: string) => {
     scrollToSection(id);
+  };
+
+  const navigateToAbout = () => {
+    const currentPath = pathname.replace(/\/+$/, "") || "/";
+    if (currentPath === "/about") {
+      smoothScrollToTop();
+      return;
+    }
+    startPageTransition("Going to About…");
+    navigate("/about");
   };
 
   return (
@@ -103,7 +117,7 @@ export function Header({ fixed = true }: HeaderProps) {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-400 to-sky-400 group-hover:w-full transition-all duration-300" />
             </button>
             <button
-              onClick={() => navigateToHomeSection("about")}
+              onClick={navigateToAbout}
               className={`transition-colors relative group ${
                 isScrolled
                   ? "text-slate-300 hover:text-white"

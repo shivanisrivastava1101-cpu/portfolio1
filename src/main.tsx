@@ -5,6 +5,7 @@ import App from "./app/App.tsx";
 import CaseStudy1 from "./app/caseStudy1/CaseStudy1";
 import CaseStudy2 from "./app/caseStudy2/CaseStudy2";
 import CaseStudy3 from "./app/casestudy3/ThunderCaseStudy";
+import AboutPage from "./app/about/about";
 import { ScrollTravelOverlay } from "./app/components/ScrollTravelOverlay";
 import {
   endPageTransitionWhenStable,
@@ -41,6 +42,7 @@ createRoot(document.getElementById("root")!).render(
       <Route path="/casestudy1" element={<CaseStudy1 />} />
       <Route path="/caseStudy2" element={<CaseStudy2 />} />
       <Route path="/casestudy3" element={<CaseStudy3 />} />
+      <Route path="/about" element={<AboutPage />} />
     </Routes>
   </BrowserRouter>,
 );
